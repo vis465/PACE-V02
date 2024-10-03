@@ -1,0 +1,261 @@
+img{
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+}
+nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px 4px 20px 0px #e539b1a6;
+    background-image: linear-gradient(135deg, #bf1591 10%, #ff5fd4 90%);
+    padding: 10px 80px;
+}
+
+#navbar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+#navbar li{
+    list-style: none;
+    padding: 0 20px;
+    position: relative;
+}
+
+#navbar li a{
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: white;
+    transition: 0.3s ease-in-out;
+}
+
+#navbar li a:hover,
+#navbar li a.active{
+    color:#740051a6;
+}
+
+#navbar li a:hover::after,
+#navbar li a.active::after{
+    content: "";
+    width: 30%;
+    height: 3px;
+    border-radius: 2px 2px 2px 2px;
+    background: #740051a6;
+    position: absolute;
+    bottom: -4px;
+    left: 20px;
+}
+
+#mobile{
+    display: none;
+}
+
+#mobile i{
+    color: #fff;
+    align-items: center;
+}
+
+.dummy form{
+    font-size: large;
+    color: #1f1b1e;
+    /* margin-left: 20%; */
+}
+.dummy input{
+    width: 100%;
+    padding: 10px;
+    
+    font-size: 16px;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid #B0B3B9;
+}
+
+.dummy input::-webkit-outer-spin-button,
+.dummy input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.dummy .btn-group{
+    width: 70%;
+    margin-right:auto ;
+    margin-left: auto;
+}
+#cie{
+    width: 50%;
+}
+#sem{
+    width:50%;
+}
+.dummy .btn-group button{
+    background-color: #bf1591; /* Green background */
+    color: white; /* White text */
+    padding: 12px 100px; /* Some padding */
+    border: 1px solid #f59dc0;
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; 
+    font-size: 16px;
+    margin-top:20px;
+    text-align: center;
+  }
+  .left{
+    width:50%;
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  .right{
+    width: 50%;
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  .dummy .btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  .dummy h2{
+    text-align: center;
+  }
+  
+  .dummy .btn-group button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+  }
+  
+  /* Add a background color on hover */
+  .dummy .btn-group button:hover {
+    background-color: #f26ace;
+  }
+
+#sub{
+    color: #fff;
+    font-size: 16px;
+    padding: 12px 35px;
+    border-radius: 50px;
+    display: inline-block;
+    border: 0;
+    outline: 0;
+    box-shadow: 0px 4px 20px 0px #e539b1a6;
+    background-image: linear-gradient(135deg, #f26ace 10%, #bf1591 100%);
+}
+.dummy  .sub-but{
+    text-align: center;
+    margin-top: 20px;
+    float: left;
+
+    margin-bottom: 30px;
+}
+
+#choose{
+    font-size: large;
+    text-align: center;
+    align-items: center;
+}
+
+.dummy h4{
+    font-size: 22px;
+    font-weight: 500;
+    text-align: center;
+}
+.dummy  .all{
+    text-align: center;
+    border: 2px solid #bf1591;
+    
+    width: 100%;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+}
+.show{
+    width: 100%;
+    display: block;
+}
+.dummy .mark{
+    /* display: inline-block; */
+    margin: 20px 20px;
+    background-color: transparent !important;
+}
+.mark,mark{
+    background-color: transparent !important;
+    padding: 0 !important;
+}
+#subject{
+    float: right;
+    margin: auto;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.dummy{
+    text-align: center;
+    margin-top: 40px;
+}
+.signupFrm {
+    
+    justify-content: center;
+    align-items: center;
+    
+    margin-bottom: 7%;
+    
+  }
+  .mark label{
+    font-size: small;
+    font-weight: bold;
+    
+    margin-bottom: 4px;
+    float: left;
+  }
+  #subject label{
+    font-size: small;
+    font-weight: bold;
+    margin-top: 10px;
+    float: right;
+    
+  }
+  .form1 {
+    
+        background-color: white;
+        width: 70%;
+        border-radius: 8px;
+        padding: 20px 40px;
+        box-shadow: 0px 10px 25px #e539b1a6;
+    }
+
+
+
+@media screen and (max-width:769px) {
+    #navbar{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        position: fixed;
+        top: 90px;
+        right: -325px;
+        width: 300px;
+        height: 100vh;
+        box-shadow: 0px 4px 20px 0px #e539b1a6;
+        background: #ff5fd4;
+        padding: 40px 0 0 10px;
+        transition: 0.3s ease-in-out;
+    }
+    #navbar.active{
+        right: 0px;
+    }
+
+    #navbar li{
+        margin-bottom: 25px;
+    }
+    #mobile{
+            display: block;
+    }
+
+    #mobile i{
+        font-size: 24px;
+        cursor: pointer;
+
+    }
+}

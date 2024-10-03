@@ -1,0 +1,60 @@
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="login.css">
+
+<body>
+
+  <div class="box-form">
+    <div class="left">
+
+      <div class="overlay">
+      <h1>Let's Register</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Curabitur et est sed felis aliquet sollicitudin</p>
+      <span>
+
+        <br>
+        <div class="inputs">
+        <button (click)="submit()">Login</button>
+        </div>
+      </span>
+      </div>
+    </div>
+    
+    
+      <div class="right">
+
+      <h4>Register</h4>
+      <p>Let's Register you in..It takes less than a minute</p>
+
+      <div class="inputs">
+        <!-- <form> -->
+        <input type="text" name="username" placeholder="User name" [(ngModel)]="username">
+        <br>
+        <input type="password" placeholder="Password" name="password" [(ngModel)]="password">
+        <br>
+        <input type="password" placeholder="Confirm Password" name="password" [(ngModel)]="password">
+        <br><br>
+        <span class="dropdown">
+            <button class="dropbtn">Select Category</button>
+            <div class="dropdown-content">
+              <div>Staff</div>
+              <div>Student</div>
+            </div>
+          </span>
+      </div>
+    
+        <h1></h1>
+        <br>
+        
+        <br>
+        <button (click)="submit()">Register</button>
+    
+        <!-- </form> -->
+      </div>
+    
+  </div>
+    
+  </body>
+
