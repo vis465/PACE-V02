@@ -73,7 +73,13 @@ def otp_gen():
     otp = ''.join(random.choices(string.digits, k=6))
     print(f"Generated OTP: {otp}")
     return otp
-
+@app.route('/otp',methods=["GET"])
+def otpverify():
+    try:
+        otp=otp_gen()
+        return otp
+    except:
+        return "Error generating OTP"
 # Endpoint for predicting student marks using ML model
 @app.route('/predict_marks', methods=["POST"])
 def predict_marks():
@@ -203,25 +209,23 @@ def login():
         pwd = data['upwd']
 
         # Query user from the database
-        sql = "SELECT user_password, user_role, is_verified FROM users WHERE user_mail = %s"
-        mycursor.execute(sql, (mail,))
+        sql = "SELECT user_password, user_role FROM users WHERE user_mail = %s"
+        mycursor.execute(sql, (mail))
         result = mycursor.fetchone()
 
         if result:
-            stored_password, role, is_verified = result
+            stored_password, role = result
 
-            if not is_verified:
-                return jsonify({'status': 'Failed', 'message': 'Account not verified. Please verify your email.'}), 403
-
+            
             # Verify password
             if check_password(stored_password, pwd):
                 print(f"User logged in: {mail}")
 
                 # Redirect based on role
                 if role == 'stu':
-                    return redirect(url_for('student_home'))
+                    return "Success"
                 elif role == 'sta':
-                    return redirect(url_for('staff_home'))
+                    return "Success "
             else:
                 return jsonify({'status': 'Failed', 'message': 'Invalid password'}), 401
         else:
