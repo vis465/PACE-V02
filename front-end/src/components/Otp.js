@@ -51,9 +51,9 @@ function Otp() {
         console.log("Entered OTP:", userOtp);
         console.log("Generated OTP:", generatedOtp);
 
-        if (userOtp === generatedOtp) {
+        if (Number(userOtp )=== generatedOtp) {
             alert('Account Created Successfully');
-            navigate('/');
+            navigate('/landingpage');
         } else {
             setErrorMessage('Invalid OTP. Please try again.');
         }

@@ -59,7 +59,7 @@ const Register = () => {
       .post("http://127.0.0.1:5000/register", userData)
       .then((response) => {
         toast.success(`${category === "sta" ? "Staff" : "Student"} Registered Successfully`);
-        navigate("/landingpage"); // Redirect to dashboard after successful registration
+        navigate("/otp"); // Redirect to dashboard after successful registration
       })
       .catch((error) => {
         if (error.response && error.response.data.error === "Email already exists") {
