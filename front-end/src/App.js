@@ -28,6 +28,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Routes>
+          <Route path='/register' element={<Register />}></Route>
           <Route path="/landingpage" element={<LandingPage />} /> {/* Landing Page */}
           <Route path="/predict" element={<Predict />} /> {/* Prediction Page */}
           {/* <Route path="/about" element={<About />} /> {/* About Page */}

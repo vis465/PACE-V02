@@ -32,7 +32,7 @@ function Login() {
         }));
 
         // Redirect to the home page after successful login
-        navigate("/home");
+        navigate("/landingpage");
       } else {
         alert("Invalid Username/Password");
       }
