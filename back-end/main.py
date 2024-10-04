@@ -150,7 +150,8 @@ def register():
         values = (mail, hashed_pwd, role, True)  # Directly mark as verified
         mycursor.execute(sql, values)
         mydb.commit()
-
+        otp=otp_gen()
+        mail_send(otp,mail)
         return jsonify({'message': 'Registration successful'}), 200
 
     except mysql.connector.Error as err:
