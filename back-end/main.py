@@ -11,16 +11,80 @@ import bcrypt
 import datetime
 import joblib
 import numpy as np
+from flask import Flask, request, jsonify
+import tensorflow as tf
+from sklearn.preprocessing import StandardScaler
+
+# Define the model
 
 app = Flask(__name__)
 CORS(app)
+from sklearn.preprocessing import StandardScaler
+
+# After generating your dataset and before training the model
 
 # Load email credentials from environment variables
 EMAIL = os.getenv('EMAIL')
 PASSWORD = os.getenv('PASSWORD')
+import numpy as np
+model = load_model('student_performance_model.h5')
+scaler_X = joblib.load('scaler_X.joblib')
+scaler_y = joblib.load('scaler_y.joblib')
 
-# Load the trained ML model
-# model = joblib.load('student_marks_predictor.pkl')
+def predict_grade(final_marks):
+    if final_marks >= 90:
+        return 'O'
+    elif final_marks >= 80:
+        return 'A+'
+    elif final_marks >= 70:
+        return 'A'
+    elif final_marks >= 60:
+        return 'B+'
+    elif final_marks >= 50:
+        return 'B'
+    elif final_marks >= 40:
+        return 'C'
+    else:
+        return 'U'
+
+@app.route('/predict_single', methods=['POST'])
+def predict_single():
+    data = request.json
+    input_data = np.array([[
+        data['student_id'],
+        data['semester'],
+        data['subject'],
+        data['cie1'],
+        data['cie2'],
+        data['cie3']
+    ]])
+    
+    input_scaled = scaler_X.transform(input_data.reshape(-1, input_data.shape[-1])).reshape(1, 1, 6)
+    prediction_scaled = model.predict(input_scaled)
+    prediction = scaler_y.inverse_transform(prediction_scaled)[0][0]
+    
+    grade = predict_grade(prediction)
+    
+    return jsonify({
+        'predicted_marks': round(prediction, 2),
+        'predicted_grade': grade
+    })
+
+@app.route('/predict_batch', methods=['POST'])
+def predict_batch():
+    file = request.files['file']
+    df = pd.read_csv(file)
+    
+    input_data = df[['StudentID', 'Semester', 'Subject', 'CIE1', 'CIE2', 'CIE3']].values
+    input_scaled = scaler_X.transform(input_data.reshape(-1, input_data.shape[-1])).reshape(-1, 1, 6)
+    
+    predictions_scaled = model.predict(input_scaled)
+    predictions = scaler_y.inverse_transform(predictions_scaled).flatten()
+    
+    df['PredictedMarks'] = predictions
+    df['PredictedGrade'] = df['PredictedMarks'].apply(predict_grade)
+    
+    return df.to_json(orient='records')
 
 # Database connection
 try:
@@ -114,16 +178,17 @@ def predict_marks():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
-# Helper function to hash password
-def hash_password(password):
-    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-
-# Helper function to check password
-def check_password(stored_password, provided_password):
+    
+def check_password(stored_password: bytes, provided_password: str) -> bool:
+    # bcrypt expects both the stored_password and provided_password to be bytes
     return bcrypt.checkpw(provided_password.encode('utf-8'), stored_password)
 
-# Status check route
+def hash_password(password: str) -> bytes:
+    
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(password.encode('utf-8'), salt)
+
+
 @app.route('/')
 def status():
     return "Flask server is running!"
@@ -199,8 +264,11 @@ def verify_otp():
             return jsonify({'status': 'Failed', 'message': 'User not found or already verified'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+# Configure logging
 
-# Login route
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 @app.route('/login', methods=["POST"])
 def login():
     try:
@@ -210,13 +278,16 @@ def login():
 
         # Query user from the database
         sql = "SELECT user_password, user_role FROM users WHERE user_mail = %s"
-        mycursor.execute(sql, (mail))
+        mycursor.execute(sql, (mail,))
         result = mycursor.fetchone()
 
         if result:
             stored_password, role = result
 
-            
+            # Ensure the stored password is of bytes type
+            if isinstance(stored_password, str):
+                stored_password = stored_password.encode('utf-8')  # Encode the password from the database if it's a string
+
             # Verify password
             if check_password(stored_password, pwd):
                 print(f"User logged in: {mail}")
@@ -225,23 +296,14 @@ def login():
                 if role == 'stu':
                     return "Success"
                 elif role == 'sta':
-                    return "Success "
+                    return "Success"
             else:
                 return jsonify({'status': 'Failed', 'message': 'Invalid password'}), 401
         else:
             return jsonify({'status': 'Failed', 'message': 'User not found'}), 404
 
     except Exception as e:
+        logging.error(f"Error occurred: {str(e)}")  # Log the error message
         return jsonify({'error': str(e)}), 500
-
-# Routes for student and staff homepages
-@app.route('/student_home')
-def student_home():
-    return "Welcome to the Student Home Page!"
-
-@app.route('/staff_home')
-def staff_home():
-    return "Welcome to the Staff Home Page!"
-
 if __name__ == '__main__':
     app.run(debug=True)
