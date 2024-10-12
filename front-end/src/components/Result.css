@@ -11,7 +11,20 @@
   .piechart {
     width: 100%;
   }
-  
+  /* Add this to your CSS file */
+@media print {
+  @page {
+    size: landscape; /* Set to landscape orientation */
+    margin: 0; /* Set margin to zero */
+  }
+
+  body {
+    transform: scale(0.7); /* Scale down to 50% */
+    transform-origin: top left; /* Set origin for scaling */
+    overflow: hidden; /* Prevent overflow during print */
+  }
+}
+
   .table {
     margin: 0 auto;
     width: 95%;
@@ -20,10 +33,10 @@
     border-radius: 10px;
     overflow-x: auto;
   }
-  
   .table th,
   .table td {
     padding: 10px;
+    
     border: 1px solid #FFB6C1;
   }
   

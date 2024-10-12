@@ -38,7 +38,7 @@ const LandingPage = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => navigate("/predict")}
+            onClick={() => navigate("/train")}
             sx={{ borderRadius: 1, padding: 1.5 }}
           >
             Get Started
