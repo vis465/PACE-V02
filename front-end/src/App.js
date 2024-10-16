@@ -8,9 +8,10 @@ import Otp from "./components/Otp";
 import Predict from "./components/predict";
 import Result from "./components/Result";
 import Train from "./components/train";
-import LandingPage from "./components/landingpage"; // Import the new LandingPage component
-// import About from "./components/About"; // Create this component
-// import History from "./components/History"; // Create this component
+import LandingPage from "./components/landingpage";
+import About from "./components/About";
+import SignInSide from "./components/sign-in-side/SignInSide"
+import SignIn from './components/sign-in/SignIn'
 const theme = createTheme({
   palette: {
     primary: {
@@ -37,13 +38,13 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Routes>
-          <Route path='/register' element={<Register />}></Route>
+          
           <Route path="/landingpage" element={<LandingPage />} /> {/* Landing Page */}
           <Route path="/predict" element={<Predict />} /> {/* Prediction Page */}
-          {/* <Route path="/about" element={<About />} /> {/* About Page */}
-          {/* <Route path="/history" element={<History />} /> History Page */} 
-          <Route path="/" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/about" element={<About />} />  
+          <Route path="/"  element={<Register />} />
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/register" element={<SignInSide />} />
           <Route path='/train' element={<Train />} />
           <Route path="/otp" element={<Otp />} />
           <Route path="/result" element={<Result />} />

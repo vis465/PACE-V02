@@ -51,7 +51,7 @@ function Login() {
         <div className="left">
           <div className="overlay">
             <h1>Let's Login</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et est sed felis aliquet sollicitudin</p>
+            <p>login here..</p>
             <span>
               <Link to="/register">
                 <div>Register</div>

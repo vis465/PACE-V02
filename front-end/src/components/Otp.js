@@ -9,13 +9,14 @@ function Otp() {
     const [errorMessage, setErrorMessage] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
-
+    
     // Fetch OTP from server once the component mounts
     useEffect(() => {
         axios.get('http://127.0.0.1:5000/otp')
             .then((response) => {
                 setGeneratedOtp(response.data);  // OTP from backend
                 console.log("Generated OTP from server:", response.data);
+                window.preventDefault();
             })
             .catch((error) => {
                 console.error("Error fetching OTP:", error);
